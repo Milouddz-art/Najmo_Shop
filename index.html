@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,13 +9,15 @@
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     body {
-      margin: 0;
       font-family: 'Georgia', serif;
       background-color: #ffffff;
       color: #111;
       transition: background-color 0.5s, color 0.5s;
+      line-height: 1.6;
     }
     body.dark-mode {
       background-color: #111;
@@ -61,15 +64,16 @@
       object-fit: cover;
       border-radius: 50%;
       margin-bottom: 10px;
+      border: 2px solid #fff;
     }
     header h1 {
       margin: 0;
-      font-size: 64px;
+      font-size: 2.5rem;
       letter-spacing: 2px;
       animation: fadeInDown 1s ease;
     }
     .subtitle {
-      font-size: 20px;
+      font-size: 1.1rem;
       color: #ccc;
       margin-top: 10px;
       animation: fadeInUp 1s ease;
@@ -77,19 +81,22 @@
     nav.categories {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       background-color: #eee;
       padding: 15px;
       font-size: 16px;
       font-weight: bold;
+      flex-wrap: wrap;
     }
     nav.categories a {
       color: #333;
       text-decoration: none;
-      padding: 8px 16px;
+      padding: 10px 15px;
       border-radius: 5px;
       background-color: #fff;
-      transition: background-color 0.3s, color 0.3s;
+      transition: all 0.3s;
+      min-width: 100px;
+      text-align: center;
     }
     nav.categories a:hover {
       background-color: #000;
@@ -101,6 +108,7 @@
       gap: 10px;
       padding: 15px;
       background-color: #f5f5f5;
+      flex-wrap: wrap;
     }
     .filter-buttons button {
       padding: 8px 16px;
@@ -109,17 +117,19 @@
       background-color: #ddd;
       cursor: pointer;
       transition: all 0.3s;
+      font-weight: bold;
     }
-    .filter-buttons button:hover, .filter-buttons button.active {
+    .filter-buttons button:hover, 
+    .filter-buttons button.active {
       background-color: #000;
       color: white;
     }
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
-      padding: 80px;
-      background-color: #5f470030;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      background-color: #f9f9f9;
     }
     body.dark-mode .products {
       background-color: #222;
@@ -127,33 +137,40 @@
     .product {
       border: none;
       border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      padding: 24px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
       text-align: center;
       background: #fff;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.3s ease;
       cursor: pointer;
+      overflow: hidden;
     }
     .product:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
     .product img {
       width: 100%;
-      max-width: 200px;
-      border-radius: 10px;
+      max-width: 220px;
+      height: auto;
+      border-radius: 8px;
       transition: transform 0.3s;
+      margin-bottom: 15px;
     }
     .product img:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
     .product h3 {
       margin: 15px 0 10px;
-      font-size: 20px;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    body.dark-mode .product h3 {
+      color: #fff;
     }
     .product p {
       margin: 5px 0;
-      font-size: 16px;
+      font-size: 1rem;
       color: #666;
     }
     body.dark-mode .product p {
@@ -161,17 +178,21 @@
     }
     .whatsapp-btn {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: 15px;
       padding: 12px 24px;
       background-color: #25D366;
       color: white;
       text-decoration: none;
       border-radius: 25px;
       font-weight: bold;
-      transition: background-color 0.3s;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
     }
     .whatsapp-btn:hover {
       background-color: #1ebe57;
+      transform: translateY(-2px);
     }
     footer {
       background-color: #111;
@@ -179,6 +200,7 @@
       padding: 30px;
       font-size: 14px;
       color: #aaa;
+      margin-top: 40px;
     }
     .modal {
       display: none;
@@ -190,6 +212,7 @@
       height: 100%;
       overflow: auto;
       background-color: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
     }
     .modal-content {
       background-color: #fff;
@@ -197,7 +220,10 @@
       padding: 30px;
       border-radius: 10px;
       max-width: 600px;
+      width: 90%;
       text-align: center;
+      position: relative;
+      animation: modalFadeIn 0.3s;
     }
     body.dark-mode .modal-content {
       background-color: #222;
@@ -217,14 +243,23 @@
       transition: transform 0.3s ease;
     }
     .modal-images img:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
     .close {
       color: #aaa;
-      float: right;
+      position: absolute;
+      top: 15px;
+      right: 25px;
       font-size: 28px;
       font-weight: bold;
       cursor: pointer;
+      transition: color 0.3s;
+    }
+    .close:hover {
+      color: #000;
+    }
+    body.dark-mode .close:hover {
+      color: #fff;
     }
     #cart-icon {
       position: fixed;
@@ -232,16 +267,25 @@
       right: 20px;
       background: #000;
       color: white;
-      padding: 10px 15px;
+      padding: 12px;
       border-radius: 50%;
       cursor: pointer;
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      transition: all 0.3s;
+    }
+    #cart-icon:hover {
+      transform: scale(1.1);
     }
     #cart-count {
       background: red;
       border-radius: 50%;
-      padding: 2px 6px;
+      padding: 3px 8px;
       font-size: 12px;
       margin-left: 5px;
     }
@@ -252,32 +296,40 @@
       background: #000;
       color: white;
       border: none;
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       cursor: pointer;
       z-index: 100;
       font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
     }
     body.dark-mode #darkModeToggle {
       background: #fff;
       color: #000;
     }
+    #darkModeToggle:hover {
+      transform: scale(1.1);
+    }
     .size-options {
       display: flex;
       justify-content: center;
-      gap: 8px;
-      margin: 15px 0;
+      gap: 10px;
+      margin: 20px 0;
       flex-wrap: wrap;
     }
     .size-options button {
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       border: 1px solid #ddd;
       background: white;
       cursor: pointer;
       transition: all 0.3s;
+      font-weight: bold;
     }
     .size-options button.active {
       background: #25D366;
@@ -296,32 +348,36 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     /* ========== MOBILE OPTIMIZATIONS ========== */
     @media (max-width: 768px) {
       header {
-        padding: 40px 15px;
+        padding: 30px 15px;
       }
       header h1 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
       }
       .subtitle {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       .logo {
         width: 60px;
         height: 60px;
       }
       nav.categories {
-        flex-wrap: wrap;
+        gap: 10px;
         padding: 10px;
       }
       nav.categories a {
-        padding: 6px 12px;
+        padding: 8px 12px;
         font-size: 14px;
+        min-width: auto;
       }
       .filter-buttons {
-        flex-wrap: wrap;
         padding: 10px;
       }
       .filter-buttons button {
@@ -337,68 +393,135 @@
         padding: 15px;
       }
       .product img {
-        max-width: 150px;
+        max-width: 180px;
       }
       .modal-content {
-        width: 90%;
+        width: 95%;
         padding: 20px;
-        margin: 20% auto;
+        margin: 10% auto;
       }
       .modal-images img {
-        max-height: 200px;
+        max-height: 250px;
       }
       footer {
         padding: 20px;
         font-size: 12px;
       }
       #cart-icon {
-        padding: 8px 12px;
-        font-size: 14px;
+        width: 45px;
+        height: 45px;
+        padding: 10px;
+        font-size: 16px;
       }
       .size-options button {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
       }
     }
 
     @media (max-width: 480px) {
       header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
       .product h3 {
-        font-size: 18px;
+        font-size: 1rem;
       }
       .product p {
-        font-size: 14px;
+        font-size: 0.9rem;
       }
       .whatsapp-btn {
-        padding: 10px 15px;
-        font-size: 14px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+      .modal-content {
+        padding: 15px;
       }
     }
 
-    /* Touch target improvements */
-    .product, .whatsapp-btn, .close, nav.categories a, .filter-buttons button, .size-options button {
-      min-height: 44px;
+    /* Order Form Styles */
+    #orderFormModal .modal-content {
+      max-width: 500px;
+    }
+    #orderFormModal label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: left;
+    }
+    #orderFormModal input,
+    #orderFormModal select,
+    #orderFormModal textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      font-family: inherit;
+      font-size: 16px;
+    }
+    #orderFormModal select {
+      height: 40px;
+    }
+    #order-summary {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 5px;
+      text-align: left;
+    }
+    body.dark-mode #order-summary {
+      background-color: #333;
+    }
+    #orderFormModal .form-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    #orderFormModal button[type="submit"],
+    #orderFormModal button[type="button"] {
+      flex: 1;
+      padding: 12px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    #orderFormModal button[type="submit"] {
+      background-color: #4285F4;
+    }
+    #orderFormModal button[type="submit"]:hover {
+      background-color: #3367d6;
+    }
+    #orderFormModal button[type="button"] {
+      background-color: #25D366;
+    }
+    #orderFormModal button[type="button"]:hover {
+      background-color: #1ebe57;
     }
   </style>
 </head>
 <body>
-  <div id="cart-icon" onclick="toggleCart()" aria-label="Panier">🛒 <span id="cart-count">0</span></div>
-  <button id="darkModeToggle" aria-label="Basculer en mode sombre">🌓</button>
+  <div id="cart-icon" onclick="toggleCart()" aria-label="Panier" title="Voir le panier">
+    🛒 <span id="cart-count">0</span>
+  </div>
+  <button id="darkModeToggle" aria-label="Basculer en mode sombre" title="Mode sombre/clair">
+    🌓
+  </button>
 
   <header>
-    <img class="logo" src="images/logo.png.png" alt="Logo Najmo Shop - Boutique de mode élégante" loading="lazy" />
+    <img class="logo" src="images/logo.png" alt="Logo Najmo Shop" loading="lazy" />
     <h1>Najmo Shop</h1>
     <p class="subtitle">Élégance réinventée • Ain Temouchent • Paiement à la livraison</p>
   </header>
 
   <nav class="categories">
-    <a href="#">T-Shirts</a>
-    <a href="#">Pantalons</a>
-    <a href="#">Chaussures</a>
-    <a href="#">Accessoires</a>
-    <a href="#">Costumes</a>
+    <a href="#" data-category="tshirts">T-Shirts</a>
+    <a href="#" data-category="pants">Pantalons</a>
+    <a href="#" data-category="shoes">Chaussures</a>
+    <a href="#" data-category="accessories">Accessoires</a>
+    <a href="#" data-category="suits">Costumes</a>
   </nav>
 
   <div class="filter-buttons">
@@ -414,24 +537,26 @@
     <!-- Products will be loaded dynamically -->
   </section>
 
-  <!-- Single Dynamic Modal -->
+  <!-- Product Detail Modal -->
   <div id="productModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()" aria-label="Fermer">&times;</span>
       <div class="modal-images"></div>
       <h3 id="modal-product-name"></h3>
       <p id="modal-product-price"></p>
+      <p id="modal-product-desc" style="color: #666; margin: 10px 0;"></p>
       
-      <!-- Size Selection -->
       <div class="size-selection">
-        <p style="margin-bottom: 8px; font-weight: bold;">Taille:</p>
+        <p style="margin-bottom: 10px; font-weight: bold;">Taille:</p>
         <div class="size-options" id="size-options">
           <!-- Size buttons will be added dynamically -->
         </div>
       </div>
       
-      <a class="whatsapp-btn" id="whatsapp-link" href="#" aria-label="Commander via WhatsApp">Commander via WhatsApp</a>
-      <button onclick="addToCart()" style="margin-top: 10px; padding: 10px 20px; background: #000; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      <a class="whatsapp-btn" id="whatsapp-link" href="#" target="_blank" aria-label="Commander via WhatsApp">
+        Commander via WhatsApp
+      </a>
+      <button onclick="addToCart()" style="margin-top: 15px; padding: 12px 24px; background: #000; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
         Ajouter au panier
       </button>
     </div>
@@ -439,33 +564,107 @@
 
   <!-- Cart Modal -->
   <div id="cartModal" class="modal">
-    <div class="modal-content" style="max-width: 800px;">
+    <div class="modal-content" style="max-width: 700px;">
       <span class="close" onclick="closeModal('cartModal')" aria-label="Fermer">&times;</span>
-      <h2>Votre Panier</h2>
+      <h2 style="margin-bottom: 20px;">Votre Panier</h2>
       <div id="cart-items"></div>
-      <p id="cart-total" style="font-weight: bold; margin-top: 20px;"></p>
-      <a class="whatsapp-btn" id="cart-whatsapp-link" href="#" style="display: block; margin-top: 20px;">
-        Commander tout le panier via WhatsApp
-      </a>
+      <p id="cart-total" style="font-weight: bold; margin: 20px 0; font-size: 1.2rem;"></p>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="closeModal('cartModal')" style="flex: 1; padding: 12px; background: #555; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Continuer mes achats
+        </button>
+        <a class="whatsapp-btn" id="cart-whatsapp-link" href="#" target="_blank" style="flex: 1; text-align: center;">
+          Commander tout le panier
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Form Modal -->
+  <div id="orderFormModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <span class="close" onclick="closeModal('orderFormModal')">&times;</span>
+      <h2 style="margin-bottom: 20px;">Informations de Livraison</h2>
+      <form id="deliveryForm" onsubmit="sendOrderEmail(event)">
+        <div>
+          <label for="firstName">Nom/اسم:</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+        
+        <div>
+          <label for="lastName">Prénom/اللقب:</label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+        
+        <div>
+          <label for="wilaya">Wilaya/ولاية:</label>
+          <select id="wilaya" name="wilaya" required>
+            <option value="">Sélectionnez votre wilaya</option>
+            <!-- Wilayas will be added by JavaScript -->
+          </select>
+        </div>
+        
+        <div>
+          <label for="city">Ville/مدينة:</label>
+          <input type="text" id="city" name="city" required>
+        </div>
+        
+        <div>
+          <label for="phone">Téléphone/رقم هاتف:</label>
+          <input type="tel" id="phone" name="phone" required pattern="[0]{1}[5-7]{1}[0-9]{8}">
+          <small style="color: #666; display: block; margin-top: 5px;">Format: 05XX XXX XXX ou 06XX XXX XXX ou 07XX XXX XXX</small>
+        </div>
+        
+        <div>
+          <label for="address">Adresse complète/العنوان:</label>
+          <textarea id="address" name="address" rows="3" required></textarea>
+        </div>
+        
+        <div id="order-summary">
+          <h3 style="margin-top: 0;">Récapitulatif de commande</h3>
+          <div id="order-details"></div>
+        </div>
+        
+        <div class="form-buttons">
+          <button type="submit">
+            Commander 
+          </button>
+          <button type="button" onclick="submitWhatsAppOrder()">
+            Commander (WhatsApp)
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
   <footer>
-    &copy; <span id="year"></span> Najmo Shop. Tous droits réservés. Suivez-nous sur Instagram: @najmo.dz
+    <div style="max-width: 800px; margin: 0 auto;">
+      <p>&copy; <span id="year"></span> Najmo Shop. Tous droits réservés.</p>
+      <p style="margin-top: 10px;">Suivez-nous sur Instagram: <a href="https://instagram.com/najmo.dz" style="color: #25D366; text-decoration: none;">@najmo.dz</a></p>
+      <p style="margin-top: 5px;">Livraison dans toute l'Algérie | Paiement à la livraison</p>
+      <p style="margin-top: 15px; color: #ff6b6b;">
+        Problème avec votre commande? Contactez-nous sur WhatsApp: <a href="https://wa.me/213659970168" style="color: #25D366;">+213 659 97 01 68</a>
+      </p>
+    </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
-    // Product Data with available sizes
+    // Initialize EmailJS
+    emailjs.init('fCT9YDSwr-pRlVtJl');
+
+    // Enhanced Product Data with descriptions
     const products = [
       {
         id: 1,
         name: "Chemise Eden Park",
         price: 2600,
         category: "tshirts",
+        description: "Chemise élégante en coton avec motif discret, parfaite pour toutes occasions.",
         sizes: ["S", "M", "L", "XL"],
         images: [
-          { src: "images/H22CHECL0037_BLF_hd-d1-compressed.webp", alt: "Chemise Eden Park - Vue avant" },
-          { src: "images/H22CHECL0037_BLF_hd-mface-compressed.webp", alt: "Chemise Eden Park - Vue arrière" }
+          { src: "images/chemise-eden-park-1.webp", alt: "Chemise Eden Park - Vue avant" },
+          { src: "images/chemise-eden-park-2.webp", alt: "Chemise Eden Park - Vue arrière" }
         ]
       },
       {
@@ -473,6 +672,7 @@
         name: "T-Shirt Noir Basique",
         price: 1800,
         category: "tshirts",
+        description: "T-shirt uni en coton bio, coupe moderne et confortable.",
         sizes: ["S", "M", "L", "XL", "XXL"],
         images: [
           { src: "images/tshirt-noir.webp", alt: "T-shirt noir simple" }
@@ -483,9 +683,10 @@
         name: "Pantalon Classique",
         price: 3500,
         category: "pants",
+        description: "Pantalon droit en tissu résistant, idéal pour le bureau ou les sorties.",
         sizes: ["36", "38", "40", "42", "44"],
         images: [
-          { src: "images/pants1.webp", alt: "Pantalon Classique" }
+          { src: "images/pantalon-classique.webp", alt: "Pantalon Classique" }
         ]
       },
       {
@@ -493,9 +694,10 @@
         name: "Jean Slim Noir",
         price: 4200,
         category: "pants",
+        description: "Jean slim noir stretch, coupe moderne et confortable toute la journée.",
         sizes: ["30", "32", "34", "36"],
         images: [
-          { src: "images/images.jfif", alt: "Jean slim noir" }
+          { src: "images/jean-slim-noir.jfif", alt: "Jean slim noir" }
         ]
       },
       {
@@ -503,9 +705,10 @@
         name: "Air Force 1 W&B",
         price: 6000,
         category: "shoes",
+        description: "Classiques intemporelles en cuir blanc avec détails noirs.",
         sizes: ["39", "40", "41", "42", "43"],
         images: [
-          { src: "images/baskets-noir.webp", alt: "Air Force 1 W&B" }
+          { src: "images/air-force-1.jpg", alt: "Air Force 1 W&B" }
         ]
       },
       {
@@ -513,29 +716,21 @@
         name: "Lacoste Black",
         price: 5800,
         category: "shoes",
+        description: "Chaussures de sport élégantes en cuir noir avec emblème signature.",
         sizes: ["40", "41", "42", "43"],
         images: [
-          { src: "images/derby.webp", alt: "Lacoste Black" }
+          { src: "images/lacoste-black.jpg", alt: "Lacoste Black" }
         ]
       },
-        {
-        id: 12,
-        name: "Air Jordan 4",
-        price: 6500,
-        category: "shoes",
-        sizes: ["40", "41", "42", "43"],
-        images: [
-         { src: "images/jordan.png", alt: "Air Jordan 4" }
-        ]  
-       },
       {
         id: 7,
         name: "Ceinture Cuir Noir",
         price: 2200,
         category: "accessories",
+        description: "Ceinture en cuir véritable noir avec boucle métallique.",
         sizes: ["90cm", "100cm", "110cm"],
         images: [
-          { src: "images/ceinture-cuir-noir.jpg", alt: "Ceinture en cuir noir" }
+          { src: "images/ceinture-cuir.jpg", alt: "Ceinture en cuir noir" }
         ]
       },
       {
@@ -543,9 +738,10 @@
         name: "Montre Minimaliste",
         price: 8500,
         category: "accessories",
+        description: "Montre élégante à cadran minimaliste, bracelet en cuir.",
         sizes: ["Standard"],
         images: [
-          { src: "images/watch.jfif", alt: "Montre style minimaliste" }
+          { src: "images/montre-minimaliste.jpg", alt: "Montre style minimaliste" }
         ]
       },
       {
@@ -553,9 +749,10 @@
         name: "Costume 3-pièces Noir",
         price: 15000,
         category: "suits",
+        description: "Costume complet premium en laine noire, parfait pour les occasions spéciales.",
         sizes: ["S", "M", "L", "XL"],
         images: [
-          { src: "images/5665594401_1_1_1.jpg", alt: "Costume complet noir" }
+          { src: "images/costume-noir.jpg", alt: "Costume complet noir" }
         ]
       },
       {
@@ -563,37 +760,53 @@
         name: "Veste Smoking",
         price: 9500,
         category: "suits",
+        description: "Veste smoking élégante en satin avec détails contrastants.",
         sizes: ["S", "M", "L"],
         images: [
-          { src: "images/10.jpg", alt: "Veste smoking élégante" }
-        ]
-      },
-      {
-        id: 11,
-        name: "Costume Noire",
-        price: 18500,
-        category: "suits",
-        sizes: ["M", "L", "XL", "XXL"],
-        images: [
-          { src: "images/noirt.webp", alt: "Costume Noire" }
+          { src: "images/veste-smoking.jpg", alt: "Veste smoking élégante" }
         ]
       }
+    ];
+
+    // Complete list of 58 Algerian wilayas
+    const algerianWilayas = [
+      "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna", 
+      "Béjaïa", "Biskra", "Béchar", "Blida", "Bouira", 
+      "Tamanrasset", "Tébessa", "Tlemcen", "Tiaret", "Tizi Ouzou", 
+      "Alger", "Djelfa", "Jijel", "Sétif", "Saïda", 
+      "Skikda", "Sidi Bel Abbès", "Annaba", "Guelma", "Constantine", 
+      "Médéa", "Mostaganem", "M'Sila", "Mascara", "Ouargla", 
+      "Oran", "El Bayadh", "Illizi", "Bordj Bou Arréridj", "Boumerdès", 
+      "El Tarf", "Tindouf", "Tissemsilt", "El Oued", "Khenchela", 
+      "Souk Ahras", "Tipaza", "Mila", "Aïn Defla", "Naâma", 
+      "Aïn Témouchent", "Ghardaïa", "Relizane", "El M'Ghair", 
+      "El Menia", "Ouled Djellal", "Bordj Badji Mokhtar", "Béni Abbès", 
+      "Timimoun", "Touggourt", "Djanet", "In Salah", "In Guezzam"
     ];
 
     // Cart System
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let selectedSize = null;
+    let currentOrderContext = {
+      type: null, // 'single' or 'cart'
+      productId: null,
+      size: null
+    };
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
       renderProducts();
       document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // Initialize dark mode
       if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
+        document.getElementById('darkModeToggle').textContent = '☀️';
       }
+      
       updateCartCount();
       
-      // Filter buttons
+      // Filter buttons event listeners
       document.querySelectorAll('.filter-buttons button').forEach(button => {
         button.addEventListener('click', function() {
           document.querySelector('.filter-buttons button.active').classList.remove('active');
@@ -602,19 +815,59 @@
         });
       });
       
+      // Category navigation
+      document.querySelectorAll('nav.categories a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const category = this.dataset.category;
+          document.querySelector('.filter-buttons button.active').classList.remove('active');
+          document.querySelector(`.filter-buttons button[data-category="${category}"]`).classList.add('active');
+          filterProducts(category);
+        });
+      });
+      
       // Dark mode toggle
       document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+      
+      // Populate wilaya dropdown
+      const wilayaSelect = document.getElementById('wilaya');
+      algerianWilayas.forEach(wilaya => {
+        const option = document.createElement('option');
+        option.value = wilaya;
+        option.textContent = wilaya;
+        wilayaSelect.appendChild(option);
+      });
+      
+      // WhatsApp button handlers
+      document.getElementById('whatsapp-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        const productId = parseInt(document.getElementById('productModal').dataset.productId);
+        if (!selectedSize) {
+          alert("Veuillez sélectionner une taille avant de commander");
+          return;
+        }
+        showOrderForm('single', productId, selectedSize);
+      });
+      
+      document.getElementById('cart-whatsapp-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (cart.length === 0) {
+          alert("Votre panier est vide");
+          return;
+        }
+        showOrderForm('cart');
+      });
     });
 
     // Render all products
     function renderProducts() {
       const productsContainer = document.querySelector('.products');
       productsContainer.innerHTML = products.map(product => `
-        <div class="product" data-category="${product.category}" onclick="openModal(${product.id})">
+        <div class="product" data-id="${product.id}" data-category="${product.category}" onclick="openModal(${product.id})">
           <img src="${product.images[0].src}" alt="${product.images[0].alt}" loading="lazy" />
           <h3>${product.name}</h3>
           <p>${product.price} DA</p>
-          <p style="color: #25D366; font-size: 14px;">Tailles: ${product.sizes.join(', ')}</p>
+          <p style="color: #25D366; font-size: 14px; margin-top: 5px;">Tailles: ${product.sizes.join(', ')}</p>
         </div>
       `).join('');
     }
@@ -634,7 +887,8 @@
       
       const modal = document.getElementById('productModal');
       document.getElementById('modal-product-name').textContent = product.name;
-      document.getElementById('modal-product-price').textContent = `Prix : ${product.price} DA`;
+      document.getElementById('modal-product-price').textContent = `${product.price} DA`;
+      document.getElementById('modal-product-desc').textContent = product.description;
       
       // Generate size buttons
       const sizeOptions = document.getElementById('size-options');
@@ -645,24 +899,7 @@
       // Reset selected size
       selectedSize = null;
       
-      // Update WhatsApp link with size parameter
-      const whatsappLink = document.getElementById('whatsapp-link');
-      whatsappLink.onclick = function() {
-        if (!selectedSize) {
-          alert("Veuillez sélectionner une taille avant de commander");
-          return false;
-        }
-        const message = `Bonjour, je souhaite commander le produit suivant:
-        
-*${product.name}*
-- Taille: ${selectedSize}
-- Prix: ${product.price} DA
-
-Merci de me confirmer la disponibilité.`;
-        this.href = `https://wa.me/213659970168?text=${encodeURIComponent(message)}`;
-        return true;
-      };
-      
+      // Update product images
       const imagesContainer = document.querySelector('#productModal .modal-images');
       imagesContainer.innerHTML = product.images.map(img => 
         `<img src="${img.src}" alt="${img.alt}" loading="lazy">`).join('');
@@ -677,21 +914,6 @@ Merci de me confirmer la disponibilité.`;
       document.querySelectorAll('#size-options button').forEach(btn => {
         btn.classList.toggle('active', btn.textContent === size);
       });
-      
-      // Update WhatsApp link immediately when size is selected
-      const productId = document.getElementById('productModal').dataset.productId;
-      const product = products.find(p => p.id == productId);
-      const whatsappLink = document.getElementById('whatsapp-link');
-      if (product && selectedSize) {
-        const message = `Bonjour, je souhaite commander le produit suivant:
-        
-*${product.name}*
-- Taille: ${selectedSize}
-- Prix: ${product.price} DA
-
-Merci de me confirmer la disponibilité.`;
-        whatsappLink.href = `https://wa.me/213659970168?text=${encodeURIComponent(message)}`;
-      }
     }
 
     function closeModal(modalId = 'productModal') {
@@ -699,27 +921,176 @@ Merci de me confirmer la disponibilité.`;
       document.body.style.overflow = "auto";
     }
 
-    window.onclick = function(event) {
+    window.addEventListener('click', function(event) {
       if (event.target.classList.contains('modal')) {
         event.target.style.display = "none";
         document.body.style.overflow = "auto";
       }
-    };
+    });
+
+    // Order form functions
+    function showOrderForm(orderType, productId = null, size = null) {
+      currentOrderContext = {
+        type: orderType,
+        productId: productId,
+        size: size
+      };
+      
+      const orderSummary = document.getElementById('order-summary');
+      const orderDetails = document.getElementById('order-details');
+      let orderText = '';
+      
+      if (orderType === 'single') {
+        const product = products.find(p => p.id === productId);
+        orderText = `
+          <p><strong>Produit:</strong> ${product.name}</p>
+          <p><strong>Taille:</strong> ${size}</p>
+          <p><strong>Prix:</strong> ${product.price} DA</p>
+        `;
+      } else {
+        const cartItems = cart.map(item => `
+          <p style="margin-bottom: 8px;">
+            <strong>${item.name}</strong><br>
+            Taille: ${item.size} | Quantité: ${item.quantity}<br>
+            Prix: ${item.price * item.quantity} DA
+          </p>
+        `).join('');
+        
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        orderText = cartItems + `<p style="margin-top: 10px;"><strong>Total:</strong> ${total} DA</p>`;
+      }
+      
+      orderDetails.innerHTML = orderText;
+      document.getElementById('orderFormModal').style.display = "block";
+      document.body.style.overflow = "hidden";
+    }
+
+    function sendOrderEmail(e) {
+      e.preventDefault(); // Prevent page reload
+
+      // Get form data
+      const form = e.target;
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const wilaya = document.getElementById('wilaya').value;
+      const city = document.getElementById('city').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+
+      // Prepare order details
+      let orderDetails = "";
+      if (currentOrderContext.type === 'single') {
+        const product = products.find(p => p.id === currentOrderContext.productId);
+        orderDetails = `Produit: ${product.name}\nTaille: ${currentOrderContext.size}\nPrix: ${product.price} DA`;
+      } else {
+        orderDetails = cart.map(item => 
+          `${item.name} (Taille: ${item.size}, Quantité: ${item.quantity}, Prix: ${item.price * item.quantity} DA)`
+        ).join('\n');
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        orderDetails += `\n\nTotal: ${total} DA`;
+      }
+
+      // Send email via EmailJS
+      emailjs.send('service_mrqh4ar', 'template_pt9rnjv', {
+        firstName: firstName,
+        lastName: lastName,
+        wilaya: wilaya,
+        city: city,
+        phone: phone,
+        address: address,
+        orderDetails: orderDetails
+      })
+      .then(() => {
+        alert('✅ Commande envoyée avec succès! Nous vous contacterons bientôt.');
+        if (currentOrderContext.type === 'cart') {
+          cart = []; // Clear cart
+          saveCart();
+          updateCartCount();
+        }
+        form.reset(); // Clear form
+        closeModal('orderFormModal');
+      })
+      .catch((error) => {
+        alert('❌ Erreur d\'envoi. Contactez-nous sur WhatsApp: +213 659 97 01 68');
+        console.error('EmailJS Error:', error);
+      });
+    }
+
+    function submitWhatsAppOrder() {
+      // Get form values
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const wilaya = document.getElementById('wilaya').value;
+      const city = document.getElementById('city').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      
+      // Validate form
+      if (!firstName || !lastName || !wilaya || !city || !phone || !address) {
+        alert("Veuillez remplir tous les champs obligatoires");
+        return;
+      }
+      
+      // Validate phone number
+      if (!/^0[5-7][0-9]{8}$/.test(phone)) {
+        alert("Veuillez entrer un numéro de téléphone valide (05XX XXX XXX ou 06XX XXX XXX ou 07XX XXX XXX)");
+        return;
+      }
+      
+      // Build WhatsApp message
+      let message = `Bonjour Najmo Shop,\n\nJe souhaite passer une commande avec les informations suivantes :\n\n`;
+      message += `*Informations client :*\n`;
+      message += `- Nom: ${firstName} ${lastName}\n`;
+      message += `- Wilaya: ${wilaya}\n`;
+      message += `- Ville: ${city}\n`;
+      message += `- Adresse: ${address}\n`;
+      message += `- Téléphone: ${phone}\n\n`;
+      message += `*Détails de la commande :*\n`;
+      
+      if (currentOrderContext.type === 'single') {
+        const product = products.find(p => p.id === currentOrderContext.productId);
+        message += `- Produit: ${product.name}\n`;
+        message += `- Taille: ${currentOrderContext.size}\n`;
+        message += `- Prix: ${product.price} DA\n\n`;
+      } else {
+        cart.forEach(item => {
+          message += `- ${item.name} (Taille: ${item.size}, Quantité: ${item.quantity}, Prix: ${item.price * item.quantity} DA)\n`;
+        });
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        message += `\n*Total: ${total} DA*\n\n`;
+      }
+      
+      message += `Merci de me confirmer la disponibilité et les modalités de livraison.`;
+      
+      // Open WhatsApp with the message
+      window.open(`https://wa.me/213659970168?text=${encodeURIComponent(message)}`, '_blank');
+      
+      // Close modal
+      closeModal('orderFormModal');
+      
+      // Clear cart if it was a cart order
+      if (currentOrderContext.type === 'cart') {
+        cart = [];
+        saveCart();
+        updateCartCount();
+      }
+    }
 
     // Cart functions
     function addToCart() {
+      const productId = parseInt(document.getElementById('productModal').dataset.productId);
+      const product = products.find(p => p.id === productId);
+      
       if (!selectedSize) {
         alert("Veuillez sélectionner une taille avant d'ajouter au panier");
         return;
       }
       
-      const modal = document.getElementById('productModal');
-      const productId = parseInt(modal.dataset.productId);
-      const product = products.find(p => p.id === productId);
+      // Check if product with same size already in cart
+      const existingItem = cart.find(item => 
+        item.id === productId && item.size === selectedSize
+      );
       
-      if (!product) return;
-      
-      const existingItem = cart.find(item => item.id === productId && item.size === selectedSize);
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
@@ -728,72 +1099,76 @@ Merci de me confirmer la disponibilité.`;
           name: product.name,
           price: product.price,
           size: selectedSize,
-          quantity: 1,
-          image: product.images[0].src
+          quantity: 1
         });
       }
       
       saveCart();
       updateCartCount();
+      alert(`${product.name} (Taille: ${selectedSize}) a été ajouté à votre panier`);
       closeModal();
     }
 
     function toggleCart() {
       const cartModal = document.getElementById('cartModal');
       const cartItemsContainer = document.getElementById('cart-items');
-      const cartTotalElement = document.getElementById('cart-total');
-      const whatsappLink = document.getElementById('cart-whatsapp-link');
       
       if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p>Votre panier est vide</p>';
-        cartTotalElement.textContent = '';
-        whatsappLink.style.display = 'none';
+        cartItemsContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Votre panier est vide</p>';
       } else {
         cartItemsContainer.innerHTML = cart.map(item => `
-          <div style="display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
-            <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; margin-right: 15px; border-radius: 5px;" loading="lazy">
-            <div style="flex-grow: 1;">
-              <h3 style="margin: 0 0 5px 0;">${item.name}</h3>
-              <p style="margin: 0;">Taille: ${item.size}</p>
-              <p style="margin: 0;">${item.price} DA × ${item.quantity} = ${item.price * item.quantity} DA</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee;">
+            <div style="flex: 1;">
+              <h4 style="margin: 0; font-size: 1.1rem;">${item.name}</h4>
+              <p style="margin: 5px 0; color: #666;">Taille: ${item.size} | Quantité: ${item.quantity}</p>
+              <p style="margin: 0; font-weight: bold;">${item.price * item.quantity} DA</p>
             </div>
-            <button onclick="removeFromCart('${item.id}', '${item.size}')" style="background: #ff4444; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">×</button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button onclick="updateQuantity(${item.id}, '${item.size}', ${item.quantity - 1})" style="background: #f5f5f5; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 16px;">-</button>
+              <span>${item.quantity}</span>
+              <button onclick="updateQuantity(${item.id}, '${item.size}', ${item.quantity + 1})" style="background: #f5f5f5; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 16px;">+</button>
+              <button onclick="removeFromCart(${item.id}, '${item.size}')" style="background: none; border: none; color: red; cursor: pointer; font-size: 20px; margin-left: 10px;">×</button>
+            </div>
           </div>
         `).join('');
         
         const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        cartTotalElement.textContent = `Total: ${total} DA`;
+        document.getElementById('cart-total').textContent = `Total: ${total} DA`;
         
-        // Build detailed WhatsApp message
-        const productList = cart.map(item => 
-          `*${item.name}*
-- Taille: ${item.size}
-- Quantité: ${item.quantity}
-- Prix unitaire: ${item.price} DA
-- Sous-total: ${item.price * item.quantity} DA`
-        ).join('\n\n');
-        
-        const message = `Bonjour, je souhaite commander les articles suivants:
-
-${productList}
-
-*Total: ${total} DA*
-
-Merci de me confirmer la disponibilité et les modalités de livraison.`;
-        
-        whatsappLink.href = `https://wa.me/213659970168?text=${encodeURIComponent(message)}`;
-        whatsappLink.style.display = 'block';
+        // Update WhatsApp link for cart
+        const whatsappLink = document.getElementById('cart-whatsapp-link');
+        whatsappLink.href = `https://wa.me/213659970168?text=${encodeURIComponent(
+          `Bonjour, je souhaite commander les articles suivants:\n\n${cart.map(item => 
+            `- ${item.name} (Taille: ${item.size}, Quantité: ${item.quantity})`
+          ).join('\n')}\n\nTotal: ${total} DA`
+        )}`;
       }
       
       cartModal.style.display = "block";
       document.body.style.overflow = "hidden";
     }
 
+    function updateQuantity(productId, size, newQuantity) {
+      const item = cart.find(item => item.id === productId && item.size === size);
+      
+      if (newQuantity <= 0) {
+        removeFromCart(productId, size);
+        return;
+      }
+      
+      if (item) {
+        item.quantity = newQuantity;
+        saveCart();
+        updateCartCount();
+        toggleCart(); // Refresh cart view
+      }
+    }
+
     function removeFromCart(productId, size) {
-      cart = cart.filter(item => !(item.id == productId && item.size === size));
+      cart = cart.filter(item => !(item.id === productId && item.size === size));
       saveCart();
       updateCartCount();
-      toggleCart();
+      toggleCart(); // Refresh cart view
     }
 
     function saveCart() {
@@ -803,12 +1178,17 @@ Merci de me confirmer la disponibilité et les modalités de livraison.`;
     function updateCartCount() {
       const count = cart.reduce((sum, item) => sum + item.quantity, 0);
       document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-count').style.display = count > 0 ? 'inline-block' : 'none';
     }
 
-    // Dark mode
+    // Dark mode toggle
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+      
+      // Update button icon
+      const icon = document.getElementById('darkModeToggle');
+      icon.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
     }
   </script>
 </body>
