@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="Najmo Shop - Boutique de mode élégante à Ain Temouchent. Paiement à la livraison. Découvrez nos chemises, pantalons et accessoires.">
+  <meta name="description" content="Najmo Shop - Boutique de mode élégante à Ain Temouchent...">
+  
+  <!-- Favicon (MANDATORY for all browsers) -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  
+  <!-- Modern Browser Support (optional but recommended) -->
+  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+  
+  <!-- iOS/Apple Devices (optional) -->
+  <link rel="apple-touch-icon" href="favicon.png">
+  
   <title>Najmo Shop - Boutique en Ligne</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -14,7 +24,7 @@
     body {
       font-family: 'Georgia', serif;
       background-color: #ffffff;
-      color: #111;
+      color: #eed85f;
       transition: background-color 0.5s, color 0.5s;
       line-height: 1.6;
     }
@@ -50,11 +60,11 @@
       border-color: #555;
     }
     header {
-      background-color: #000;
+      background-color: #000000;
       color: #fff;
       padding: 60px 20px;
       text-align: center;
-      background-image: linear-gradient(to right, #000, #111);
+      background-image: linear-gradient(to right, #4B2E2E, #3B2F2F);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
     .logo {
@@ -63,7 +73,7 @@
       object-fit: cover;
       border-radius: 50%;
       margin-bottom: 10px;
-      border: 2px solid #fff;
+      border: 2px solid #3B2F2F;
     }
     header h1 {
       margin: 0;
@@ -674,15 +684,16 @@
 
   <nav class="categories">
     <a href="#" data-category="tshirts">T-Shirts</a>
+    <a href="#" data-category="chemises">Chemises</a>
     <a href="#" data-category="pants">Pantalons</a>
     <a href="#" data-category="shoes">Chaussures</a>
     <a href="#" data-category="accessories">Accessoires</a>
     <a href="#" data-category="suits">Costumes</a>
   </nav>
-
   <div class="filter-buttons">
     <button data-category="all" class="active">Tous</button>
     <button data-category="tshirts">T-Shirts</button>
+    <button data-category="chemises">Chemises</button>
     <button data-category="pants">Pantalons</button>
     <button data-category="shoes">Chaussures</button>
     <button data-category="accessories">Accessoires</button>
